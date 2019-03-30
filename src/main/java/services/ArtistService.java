@@ -1,6 +1,6 @@
 package services;
 
-import entities.ArtistEntity;
+import entities.ArtistEntityEntity;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,10 +12,10 @@ public class ArtistService {
     private EntityTransaction tx = em.getTransaction();
 
 
-    public ArtistEntity createArtist(String firstName, String lastName, String instrument ){
+    public ArtistEntityEntity createArtist(String firstName, String lastName, String instrument ){
 
-        ArtistEntity artist = new ArtistEntity();
-      //  artist.setId(id);
+        ArtistEntityEntity artist = new ArtistEntityEntity();
+     //   artist.setId(id);
         artist.setFirstName(firstName);
         artist.setLastName(lastName);
         artist.setInstrument(instrument);
@@ -23,25 +23,29 @@ public class ArtistService {
         em.persist(artist);
         tx.commit();
 
+        System.out.println("Service" +artist);
         return artist;
+
     }
 
 
-    public ArtistEntity createArtist(ArtistEntity artistEntity){
+    public ArtistEntityEntity createArtist(ArtistEntityEntity artistEntity){
         tx.begin();
         em.persist(artistEntity);
         tx.commit();
+        System.out.println("new artist added:"+ artistEntity);
         return artistEntity;
-    }
-
-    public ArtistEntity findArtistById(Integer id){
-        return em.find(ArtistEntity.class, id);
 
     }
 
-    public ArtistEntity removeArtist(Integer id){
-       // ArtistEntity artist = new ArtistEntity();
-        ArtistEntity artist =   em.find(ArtistEntity.class, id);
+    public ArtistEntityEntity findArtistById(Integer id){
+        return em.find(ArtistEntityEntity.class, id);
+
+    }
+
+    public ArtistEntityEntity removeArtist(Integer id){
+       // ArtistEntity_test artist = new ArtistEntity_test();
+        ArtistEntityEntity artist =   em.find(ArtistEntityEntity.class, id);
         if(artist !=null){
             tx.begin();
             em.remove(artist);
@@ -51,21 +55,22 @@ public class ArtistService {
 
     }
 
-    public List<ArtistEntity> findAllArtists(){
+    public List<ArtistEntityEntity> findAllArtists(){
 
 
-        TypedQuery<ArtistEntity> query=em.createQuery("select a from ArtistEntity a", ArtistEntity.class);
-      List<ArtistEntity> listResults = query.getResultList();
+       // TypedQuery<ArtistEntity_test> query=em.createQuery("select a from ArtistEntity_test a", ArtistEntity_test.class);
+    //  List<ArtistEntity_test> listResults = query.getResultList();
 
-        return listResults;
+       // return listResults;
+        return null;
     }
 
-    public ArtistEntity updateArtist(ArtistEntity artistEntity , String firstName){
-        ArtistEntity artistEntity1 = em.merge(artistEntity);
+    public void updateArtist(ArtistEntityEntity artistEntity , String firstName){
+        ArtistEntityEntity artistEntity1 = em.merge(artistEntity);
         tx.begin();
-      artistEntity1.setFirstName(firstName);
+        artistEntity1.setFirstName(firstName);
         tx.commit();
-        return artistEntity1;
+        System.out.println(artistEntity);
 
     }
 
